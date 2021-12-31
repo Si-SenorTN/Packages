@@ -1,6 +1,6 @@
-local V3ZERO = Vector3.new()
 local RNG = Random.new()
-local NORMALIZED = Vector3.new(0, 1E-3, 0).Unit
+-- selene:allow(incorrect_standard_library_use)
+local NORMALIZED = Vector3.one.Unit
 
 local VectorUtil = {}
 
@@ -10,7 +10,7 @@ end
 
 function VectorUtil.setMag(vector, mag)
 	local normalized = vector.Unit
-	if vector == V3ZERO then
+	if vector == Vector3.zero then
 		normalized = NORMALIZED
 	end
 	return normalized * mag

@@ -1,5 +1,5 @@
 local function MBC(numPoints: number, numCandidates: number, getRandomSample: () -> Vector3, onBestRecieve: (bestPosition: Vector3) -> nil)
-	local values = { Vector3.new() }
+	local values = { Vector3.zero }
 	for i = 1, numPoints do
 		local best = nil
 		local bestDistance = -1
