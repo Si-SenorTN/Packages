@@ -1,0 +1,10 @@
+[package]
+name = "senor/enum"
+description = "Enum class"
+version = "0.0.1"
+authors = ["Luca Fardales"]
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "shared"
+
+[dependancies]
+Symbol = "senor/symbol@^0.1"

@@ -1,0 +1,12 @@
+[package]
+name = "senor/events"
+description = "Event utility"
+version = "0.0.1"
+authors = ["Luca Fardales"]
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "shared"
+
+[dependancies]
+Table = "senor/table@^0.1"
+Symbol = "senor/symbol@^0.1"
+strict = "senor/strict@^0.1"

@@ -1,0 +1,11 @@
+[package]
+name = "senor/attribute"
+description = "Attribute class"
+version = "0.0.1"
+authors = ["Luca Fardales"]
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "shared"
+
+[dependancies]
+set = "senor/set@^0.1"
+Signal = "senor/signal@^0.1"

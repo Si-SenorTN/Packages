@@ -1,0 +1,10 @@
+[package]
+name = "senor/color"
+description = "Color utility"
+version = "0.0.1"
+authors = ["Luca Fardales"]
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "shared"
+
+[dependancies]
+Math = "senor/math@^0.1"
