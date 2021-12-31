@@ -1,3 +1,4 @@
 *.toml
-!wally.toml
 *.json
+
+!wally.toml
