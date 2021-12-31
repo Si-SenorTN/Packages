@@ -2,7 +2,6 @@
 name = "senor/attribute"
 description = "Attribute class"
 version = "0.0.1"
-authors = ["Luca Fardales"]
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 

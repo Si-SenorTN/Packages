@@ -1,2 +1,3 @@
-roblox.toml
+*.toml
+!wally.toml
 *.json

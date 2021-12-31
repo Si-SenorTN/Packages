@@ -2,6 +2,5 @@
 name = "senor/vector"
 description = "Vector utility"
 version = "0.0.1"
-authors = ["Luca Fardales"]
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
