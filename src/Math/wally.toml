@@ -1,5 +1,5 @@
 [package]
-name = "senor/math"
+name = "si-senortn/math"
 description = "Math utility"
 version = "0.0.1"
 registry = "https://github.com/UpliftGames/wally-index"

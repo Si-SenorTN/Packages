@@ -1,5 +1,5 @@
 [package]
-name = "senor/set"
+name = "si-senortn/set"
 description = "Set properties and attributes easily"
 version = "0.0.1"
 registry = "https://github.com/UpliftGames/wally-index"

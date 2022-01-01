@@ -1,5 +1,5 @@
 [package]
-name = "senor/vector"
+name = "si-senortn/vector"
 description = "Vector utility"
 version = "0.0.1"
 registry = "https://github.com/UpliftGames/wally-index"

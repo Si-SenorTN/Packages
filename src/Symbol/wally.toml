@@ -1,5 +1,5 @@
 [package]
-name = "senor/symbol"
+name = "si-senortn/symbol"
 description = "Symbol class"
 version = "0.0.1"
 registry = "https://github.com/UpliftGames/wally-index"

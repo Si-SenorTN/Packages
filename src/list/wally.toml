@@ -1,5 +1,5 @@
 [package]
-name = "senor/list"
+name = "si-senortn/list"
 description = "list utility"
 version = "0.0.1"
 registry = "https://github.com/UpliftGames/wally-index"

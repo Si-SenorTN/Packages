@@ -1,11 +1,11 @@
 [package]
-name = "senor/events"
+name = "si-senortn/events"
 description = "Event utility"
 version = "0.0.1"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 
 [dependancies]
-Table = "senor/table@^0.1"
-Symbol = "senor/symbol@^0.1"
-strict = "senor/strict@^0.1"
+Table = "si-senortn/table@^0.0"
+Symbol = "si-senortn/symbol@^0.0"
+strict = "si-senortn/strict@^0.0"

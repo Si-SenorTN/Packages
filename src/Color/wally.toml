@@ -1,9 +1,9 @@
 [package]
-name = "senor/color"
+name = "si-senortn/color"
 description = "Color utility"
 version = "0.0.1"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 
 [dependancies]
-Math = "senor/math@^0.1"
+Math = "si-senortn/math@^0.0"

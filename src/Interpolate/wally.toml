@@ -1,11 +1,11 @@
 [package]
-name = "senor/interpolator"
+name = "si-senortn/interpolator"
 description = "Interpolator class"
 version = "0.0.1"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 
 [dependancies]
-Symbol = "senor/symbol@^0.1"
-strict = "senor/strict@^0.1"
-list = "senor/list@^0.1"
+Symbol = "si-senortn/symbol@^0.0"
+strict = "si-senortn/strict@^0.0"
+list = "si-senortn/list@^0.0"

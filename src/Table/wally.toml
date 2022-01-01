@@ -1,5 +1,5 @@
 [package]
-name = "senor/table"
+name = "si-senortn/table"
 description = "table utility"
 version = "0.0.1"
 registry = "https://github.com/UpliftGames/wally-index"
