@@ -18,15 +18,11 @@ local typeClassMap = {
 local Attribute = {}
 Attribute.prototype = {}
 
-function Attribute.Is(object)
-	return type(object) == "table" and getmetatable(object) == Attribute
-end
-
 function Attribute.new(value)
 	local t = typeof(value)
 	local class = assert(typeClassMap[t], "Attribute does not support type \"" .. t .. "\"")
 
-	local metatable = { __index = Attribute }
+	local metatable = { __index = Attribute.prototype }
 	local self = setmetatable({
 		_value = value,
 		_isTable = (t == "table")
