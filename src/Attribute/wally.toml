@@ -6,5 +6,5 @@ registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 
 [dependancies]
-set = "si-senortn/set@^0.0"
-Signal = "si-senortn/signal@^0.0"
+set = "si-senortn/set@0.0.1"
+Signal = "si-senortn/signal@0.0.1"
