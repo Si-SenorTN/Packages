@@ -8,3 +8,4 @@ realm = "shared"
 [dependencies]
 Trove = "sleitnick/trove@^0.1"
 Symbol = "si-senortn/symbol@0.0.1"
+Table = "si-senortn/table@0.0.1"

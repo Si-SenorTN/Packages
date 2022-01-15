@@ -1,5 +1,6 @@
 local Trove = require(script.Parent.Trove)
 local Symbol = require(script.Parent.Symbol)
+local Table = require(script.Parent.Table)
 
 local ERR_NO_SUBTABLES = "Cannot include subtables within State"
 local ERR_NOT_DICTIONARY = "State must be a dictionary"
@@ -112,6 +113,14 @@ function Config.prototype:SetKey(key: string, newValue)
 	end
 
 	self[State][key] = newValue
+end
+
+function Config.prototype:GetKey(key)
+	return assert(self[State][key], key.. " does not exist within State")
+end
+
+function Config.prototype:GetState()
+	return Table.shallow(self[State])
 end
 
 function Config.prototype:Observe(key: string, observer)
