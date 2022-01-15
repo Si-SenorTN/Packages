@@ -1,10 +1,10 @@
 [package]
 name = "si-senortn/attribute"
 description = "Attribute class"
-version = "0.1.0"
+version = "0.1.1"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 
-[dependancies]
+[dependencies]
 set = "si-senortn/set@0.0.1"
 Signal = "si-senortn/signal@0.0.1"
