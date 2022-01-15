@@ -10,7 +10,7 @@ local keybinds = Config.new({
 
 keybinds:Observe("Reload", function(newValue, trove)
 	trove:BindAction("ReloadAction", function(_, inputState)
-		if inputState == Enum.InputState.Begin then
+		if inputState == Enum.UserInputState.Begin then
 			print("Pressing Reload")
 		end
 	end, newValue)

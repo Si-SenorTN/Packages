@@ -112,7 +112,7 @@ function Config.prototype:SetKey(key: string, newValue)
 		end
 	end
 
-	self[State][key] = newValue
+	state[key] = newValue
 end
 
 function Config.prototype:GetKey(key)
