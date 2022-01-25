@@ -9,7 +9,7 @@ local function isEmpty(t: Table)
 end
 
 local function getn(t: Table)
-	local count = 1
+	local count = 0
 	for _ in pairs(t) do
 		count += 1
 	end
@@ -76,11 +76,10 @@ local function replace(t: Table, extension: Table)
 end
 
 local function extendArray(t: Table, extension: Table)
-	local tbl = table.create(#t)
 	for index, value in pairs(extension) do
-		table.insert(tbl, index, value)
+		table.insert(t, index, value)
 	end
-	return tbl
+	return t
 end
 
 local function merge(t0: Table, t1: Table)
