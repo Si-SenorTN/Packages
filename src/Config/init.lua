@@ -49,8 +49,13 @@ end
 
 function Config.newGlobalConfig(name, ...)
 	local gconfig = Config.new(name, ...)
+	gconfig[InternalTrove]:Add(function()
+		globalConfigs[name] = nil
+	end)
 
 	globalConfigs[name] = gconfig
+
+	return gconfig
 end
 
 function Config.getGlobalConfig(name)
