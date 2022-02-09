@@ -7,5 +7,5 @@ realm = "shared"
 
 [dependencies]
 Table = "si-senortn/table@0.0.2"
-Symbol = "si-senortn/symbol@0.0.1"
+Symbol = "si-senortn/symbol@0.0.2"
 strict = "si-senortn/strict@0.0.1"
