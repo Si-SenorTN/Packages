@@ -56,7 +56,7 @@ function Interpolate.Create(params: InterpolationParams, name: string?)
 	return inter
 end
 
-function Interpolate.Query(sym: Symbol.Symbol)
+function Interpolate.Query(sym: Symbol.NamedSymbol)
 	return assert(allInterpolators[sym], sym.." is not a valid member of Interpolators[]")
 end
 

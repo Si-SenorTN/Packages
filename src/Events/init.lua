@@ -92,7 +92,7 @@ local collectiveScheduler = {} do
 	end
 
 	function collectiveScheduler.prototype:Add(handler)
-		local marker = Symbol.named(tostring(handler))
+		local marker = Symbol.unnamed()
 		self._eventHandlers[marker] = handler
 		if self._automaticBehavior and not Table.empty(self._eventHandlers) then
 			self:Start()
