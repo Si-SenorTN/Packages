@@ -106,7 +106,7 @@ end
 Interpolator.prototype.Update = Interpolator.prototype.Step
 
 function Interpolator.prototype:OnStep(onStepHandler: (position: any, isComplete: boolean) -> nil)
-	local marker = Symbol.named(string.format("OnStep::%s", tostring(onStepHandler)))
+	local marker = Symbol.unnamed()
 	self._onStepFuncs[marker] = onStepHandler
 
 	return marker

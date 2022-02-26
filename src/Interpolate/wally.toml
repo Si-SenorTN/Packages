@@ -1,7 +1,7 @@
 [package]
 name = "si-senortn/interpolator"
 description = "Interpolator class"
-version = "0.0.2"
+version = "0.0.3"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 
