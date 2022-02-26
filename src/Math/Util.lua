@@ -17,8 +17,7 @@ end
 --- Interpolates between two numbers based off percentage given
 --- @return number x interpolated num0 towards num1 based off percent
 function Math.lerp(num0: number, num1: number, percent: number)
-	math.clamp(percent, 0, 1)
-	return num0 + ((num1 - num0) * percent)
+	return num0 + ((num1 - num0) * math.clamp(percent, 0, 1))
 end
 
 --- Reflects a Vector from a surface normal
