@@ -13,7 +13,7 @@ local value = true
 local function waitUntil(expectedValue)
 	repeat
 		task.wait()
-	until value == value
+	until value == expectedValue
 end
 
 waitUntil(false)
