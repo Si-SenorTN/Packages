@@ -1,7 +1,9 @@
 local function createYieldable(value)
 	local yieldable = {
-		Value = value
+		Value = value,
 	}
+
+	local yieldingTheads = {}
 
 	local function getValue()
 		return yieldable.Value
@@ -10,24 +12,29 @@ local function createYieldable(value)
 	local function setValue(newValue)
 		yieldable.Value = newValue
 
-		if yieldable.resumeThread then
-			yieldable.resumeThread()
+		for index, yielding in pairs(yieldingTheads) do
+			if yielding.evaluate(newValue) then
+				task.spawn(yielding.thread)
+				table.remove(yieldingTheads, index)
+			end
 		end
-	end
-
-	local function evaluate(expected)
-		return yieldable.Value == expected
 	end
 
 	local function waitUntil(expectedValue)
+		local function evaluate(expected)
+			return yieldable.Value == expected
+		end
+
 		if evaluate(expectedValue) then
 			return
 		end
+
 		local runningCoroutine = coroutine.running()
-		yieldable.resumeThread = function()
-			task.spawn(runningCoroutine)
-			yieldable.resumeThread = nil
-		end
+
+		table.insert(yieldingTheads, {
+			evaluate = evaluate,
+			thread = runningCoroutine
+		})
 
 		return coroutine.yield()
 	end
