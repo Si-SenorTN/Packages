@@ -1,9 +1,0 @@
-[package]
-name = "si-senortn/color"
-description = "Color utility"
-version = "0.0.2"
-registry = "https://github.com/UpliftGames/wally-index"
-realm = "shared"
-
-[dependencies]
-Math = "si-senortn/math@0.0.2"

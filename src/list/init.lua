@@ -22,5 +22,5 @@ end
 
 return {
 	shallow = shallowGetDictionary,
-	deep = deepGetDictionary
+	deep = deepGetDictionary,
 }

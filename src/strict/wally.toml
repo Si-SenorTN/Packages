@@ -1,6 +1,0 @@
-[package]
-name = "si-senortn/strict"
-description = "strict guard tables"
-version = "0.0.1"
-registry = "https://github.com/UpliftGames/wally-index"
-realm = "shared"

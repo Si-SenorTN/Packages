@@ -1,6 +1,4 @@
-type Table = {
-	any
-}
+type Table = { any }
 
 local RANDOM = Random.new()
 
@@ -158,7 +156,7 @@ end
 local function packSparse(...: any)
 	return {
 		n = select("#", ...),
-		...
+		...,
 	}
 end
 

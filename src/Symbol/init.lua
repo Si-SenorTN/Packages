@@ -24,5 +24,5 @@ return setmetatable(Symbol, {
 		else
 			return Symbol.unnamed()
 		end
-	end
+	end,
 })

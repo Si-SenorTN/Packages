@@ -33,7 +33,7 @@ local function createYieldable(value)
 
 		table.insert(yieldingTheads, {
 			evaluate = evaluate,
-			thread = runningCoroutine
+			thread = runningCoroutine,
 		})
 
 		return coroutine.yield()
@@ -41,10 +41,10 @@ local function createYieldable(value)
 
 	return {
 		waitUntil = waitUntil,
-		getValue = getValue
+		getValue = getValue,
 	}, setValue
 end
 
 return {
-	create = createYieldable
+	create = createYieldable,
 }

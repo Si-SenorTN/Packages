@@ -17,7 +17,7 @@ Config.DeleteToken = DeleteToken
 
 local globalConfigs = {}
 
-local function assertNoneShallow(t: {any}, typeToDisclude: any, msg: string)
+local function assertNoneShallow(t: { any }, typeToDisclude: any, msg: string)
 	for _, value in pairs(t) do
 		local dataType = typeof(value)
 		assert(dataType ~= typeToDisclude, msg)
@@ -25,7 +25,7 @@ local function assertNoneShallow(t: {any}, typeToDisclude: any, msg: string)
 	return t
 end
 
-function Config.new(initialState: {[string]: any})
+function Config.new(initialState: { [string]: any })
 	assert(type(initialState) == "table", ERR_NOT_DICTIONARY)
 
 	local state = initialState or {}
@@ -36,7 +36,7 @@ function Config.new(initialState: {[string]: any})
 		[State] = state,
 		[Observers] = {},
 
-		[InternalTrove] = trove
+		[InternalTrove] = trove,
 	}, metatable)
 
 	trove:Add(function()
@@ -121,7 +121,7 @@ function Config.prototype:SetKey(key: string, newValue)
 end
 
 function Config.prototype:GetKey(key)
-	return assert(self[State][key], key.. " does not exist within State")
+	return assert(self[State][key], key .. " does not exist within State")
 end
 
 function Config.prototype:GetState()
@@ -140,7 +140,7 @@ function Config.prototype:Observe(key: string, observer)
 	local trove = self[InternalTrove]:Construct(Trove)
 	observers[key] = {
 		_trove = trove,
-		_handler = observer
+		_handler = observer,
 	}
 
 	local currentState = self[State][key]

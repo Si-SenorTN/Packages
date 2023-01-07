@@ -1,11 +1,11 @@
 [package]
 name = "si-senortn/config"
 description = "Create custom Config types and subscribe to changes"
-version = "0.0.4"
+version = "0.1.0"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 
 [dependencies]
-Trove = "sleitnick/trove@^0.3"
-Symbol = "si-senortn/symbol@0.0.2"
-Table = "si-senortn/table@0.0.2"
+Trove = "sleitnick/trove@^0.5"
+Symbol = "si-senortn/symbol@0.1.0"
+Table = "si-senortn/table@0.1.0"

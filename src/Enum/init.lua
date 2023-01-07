@@ -3,9 +3,9 @@ local Symbol = require(script.Parent.Symbol)
 local ERR_NON_MEMBER = "%q is not a valid member of %s"
 local ERR_CANNOT_WRITE = "Cannot write to %s"
 
-local function makeEnum(name: string, values: Array<string>)
+local function makeEnum(name: string, values: { string })
 	local enum = {
-		Name = name
+		Name = name,
 	}
 
 	local enumItems = {}
@@ -26,7 +26,7 @@ local function makeEnum(name: string, values: Array<string>)
 		end,
 		__tostring = function()
 			return ("Enum(%s)"):format(name)
-		end
+		end,
 	}
 
 	function enum:GetValues()

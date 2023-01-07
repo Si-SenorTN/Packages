@@ -2,17 +2,17 @@ local set = require(script.Parent.set)
 local Signal = require(script.Parent.Signal)
 
 local typeClassMap = {
-	boolean = "BoolValue";
-	string = "StringValue";
-	table = true;
-	CFrame = "CFrameValue";
-	Color3 = "Color3Value";
-	BrickColor = "BrickColorValue";
-	number = "NumberValue";
-	Instance = "ObjectValue";
-	Ray = "RayValue";
-	Vector3 = "Vector3Value";
-	["nil"] = "ObjectValue";
+	boolean = "BoolValue",
+	string = "StringValue",
+	table = true,
+	CFrame = "CFrameValue",
+	Color3 = "Color3Value",
+	BrickColor = "BrickColorValue",
+	number = "NumberValue",
+	Instance = "ObjectValue",
+	Ray = "RayValue",
+	Vector3 = "Vector3Value",
+	["nil"] = "ObjectValue",
 }
 
 local Attribute = {}
@@ -25,7 +25,7 @@ function Attribute.new(value)
 	local metatable = { __index = Attribute.prototype }
 	local self = setmetatable({
 		_value = value,
-		_isTable = (t == "table")
+		_isTable = (t == "table"),
 	}, metatable)
 
 	if self._isTable then
@@ -52,7 +52,7 @@ function Attribute.prototype:Get()
 	return self._value
 end
 
-function Attribute.prototype:Mount(parent: Instance, props: {any})
+function Attribute.prototype:Mount(parent: Instance, props: { any })
 	if not self._isTable then
 		if props then
 			set.properties(self._object, props)

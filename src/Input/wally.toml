@@ -1,6 +1,0 @@
-[package]
-name = "si-senortn/input"
-description = "Input utility"
-version = "0.0.1"
-registry = "https://github.com/UpliftGames/wally-index"
-realm = "shared"

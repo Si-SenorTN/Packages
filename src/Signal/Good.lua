@@ -49,7 +49,6 @@ local function runEventHandlerInFreeThread(...)
 	end
 end
 
-
 -- Connection class
 local Connection = {}
 Connection.__index = Connection
@@ -64,7 +63,9 @@ function Connection.new(signal, fn)
 end
 
 function Connection:Disconnect()
-	if not self._connected then return end
+	if not self._connected then
+		return
+	end
 	self._connected = false
 
 	-- Unhook the node, but DON'T clear it. That way any fire calls that are
@@ -93,7 +94,7 @@ setmetatable(Connection, {
 	end,
 	__newindex = function(_, key)
 		error(("Attempt to set Connection::%s (not a valid member)"):format(tostring(key)), 2)
-	end
+	end,
 })
 
 -- Signal class
@@ -185,7 +186,7 @@ setmetatable(Signal, {
 	end,
 	__newindex = function(_, key)
 		error(("Attempt to set Signal::%s (not a valid member)"):format(tostring(key)), 2)
-	end
+	end,
 })
 
 return Signal
