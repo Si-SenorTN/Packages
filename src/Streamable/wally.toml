@@ -1,0 +1,10 @@
+[package]
+name = "si-senortn/streamable"
+description = "Streamable class"
+version = "0.1.0"
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "shared"
+
+[dependencies]
+Trove = "sleitnick/trove@^0.5"
+Signal = "si-senortn/signal@0.1.0"
