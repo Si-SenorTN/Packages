@@ -35,10 +35,12 @@ local Streamable = require(ReplicatedStorage.Packages.Streamable)
 
 local model = Streamable.new(Workspace:WaitForChild("Model"))
 
-local part = Model:Watch("Part")
+local part = model:Watch("Part")
 ```
 
-The `Watch` method will look for children on that model by name, in the future I might add compatibility for things like class lookups, handling multiple of the same named children, but for now it'll track one instance.
+Calling `WaitForChild` on said model is safe, as we know it will exist first, and will never be subject to streaming out, making it a great host object for our new streamable.
+
+The `Watch` method will look for children on that model by name, in the future I might add compatibility for things like class lookups, handling multiple of the same named children, but for now it'll track the first found instance with said name.
 
 The `Watch` method also takes a second argument, that being its initial state.
 `State` is a table that represents **only** valid properties and their values respectively. This is where it starts to get more like Roact.
@@ -52,7 +54,11 @@ local part = Model:Watch("Part", {
 })
 ```
 
-If you're anticipating the pattern here the next method I'd like to highlight is `SetState`. `SetState` will accept one argument, that being either a partial state updater table, or a state updater function. Partial state table will reconcile with the current state and then update your instances properties to match that of the state tables. The functional version of `SetState` will give you the current state as a read only parameter, and will accept a partial state table as a return value, or nil if youd like to omit the update. The behavior to Roact is nearly identical.
+If you're anticipating the pattern here the next method I'd like to highlight is `SetState`. It will accept one argument, that being either a partial state updater table, or a state updater function.
+
+A partial state table will merge with the current state and then update your instances properties to match that of the final state table.
+
+The functional version of `SetState` will give you the current state as a read only parameter, and will accept a partial state table as a return value, or nil if youd like to omit the update. The behavior to Roact is nearly identical.
 
 ```lua
 part:SetState({
@@ -61,6 +67,7 @@ part:SetState({
 
 part:SetState(function(currentState)
 	if currentState.Anchored then
+		-- send partial state, and update
 		return {
 			Anchored = false
 		}
@@ -71,18 +78,22 @@ part:SetState(function(currentState)
 end)
 ```
 
-Bindings can also be used on the state table. We can create a binding like so
+### Binding
+
+Bindings are special objects that represent values, most commonly instance properties. They can be used to updates properties within state without having to call `SetState` multiple times.
+
+We can create a binding like so
 
 ```lua
 local binding = Streamable.createBinding(Vector3.zero)
 ```
 
-Their values can be set, retrieved, subscribed to, and mapped.
+Their values can be set, retrieved, subscribed to, and mapped. Think of bindings as an extension to a regular lua variable.
 
 ```lua
-binding:SetValue(Vector3.zero)
+binding:SetValue(Vector3.one)
 
-print(binding:GetValue()) --> 0, 0, 0
+print(binding:GetValue()) --> 1, 1, 1
 
 binding:Subscribe(function(value)
 	print(value)
@@ -93,7 +104,23 @@ local newBinding = binding:Map(function(value)
 end)
 ```
 
-Mapping is most useful when used in a state update, lets take a look of an example of using a binding for setting state.
+Their values can be directly applied to state in any point of the instances lifecycle.
+
+```lua
+local pos = Streamable.createBinding(Vector3.zero)
+
+local part = model:Watch("Part", {
+	Position = pos,
+})
+```
+
+Any time the `pos` binding value is set and changed, it will be directly applied to the watched parts position.
+
+Mapping a binding allows you to intercept a bindings current value, and then possibly change it into something else.
+
+The `Map` function itself returns a new binding that reflects the intercepted value of the binding that originally called `Map`. Note that a mapped binding cannot set its own value, and will change only when the original binding changes
+
+Mapping is most useful when used in a state update, lets take a look at an example of using a mapped binding for setting state.
 
 ```lua
 local model = Streamable.new(Workspace:WaitForChild("Model"))
@@ -111,7 +138,13 @@ pos:SetValue(0.5)
 
 As soon as "Part" is streamed in, its position will be lerped halfway between origin and one stud on every axis, aka Vector3<0.5, 0.5, 0.5>.
 
-Following in suit (once again) with Roact, state can accept a special `None` key to remove something from a state update. This can be used to wipe a primitive type from state or clear a binding. Do note that bindings operate on their own, in this way its a bit different from Roact. Setting its key to `None` in a state table does **not** mark the binding as unseable, it simply disconnects its subscription. Lets see how we can use the `None` key.
+### None
+
+Following in suit (once again) with Roact, state can accept a special `None` key to remove something from a state update. This can be used to wipe a primitive type from state or clear a binding.
+
+Do note that bindings can operate on their own, in this way its a bit different from Roact. Setting its key to `None` in a state table does **not** mark the binding as unseable, it simply disconnects its subscription that was changing state.
+
+Lets see how we can use the `None` key.
 
 ```lua
 local pos = Streamable.createBinding(Vector3.zero)
@@ -127,6 +160,8 @@ pos:SetValue(Vector3.one)
 ```
 
 If part is not currently streamed in, this will cancel the state from setting it to `Vector3.one`, otherwise it will simply set to origin, but clear it from state afterwards so it does not update and persist on stream in/out. In the future I may dedcide to batch state changes and reconcile them all onto one state update at the end of each frame, but for now set state is immediate.
+
+### Utility Methods
 
 Streamable instances also come with a few utility methods, such as `GetState` and `Observe`.
 
@@ -147,12 +182,25 @@ local connection = part:Observe(function(instance, trove)
 end)
 ```
 
-`GetState` provides a read-only, shallow copied snapshot of the parts current state. Bindings will represent the current value that they hold, and will not update until you call `GetState` again.
+`GetState` provides a read-only, shallow copied snapshot of the parts current state. Bindings will represent the value that they currently hold, and will not reflect updates until you call `GetState` again.
 
-`Observe` provides the streamed in instance and a [trove](https://github.com/Sleitnick/RbxUtil/tree/main/modules/trove) by sleitnick. The trove auto cleans up when the instance streams out.
+`Observe` provides the streamed-in instance and a [trove](https://github.com/Sleitnick/RbxUtil/tree/main/modules/trove) by sleitnick. The trove auto cleans up when the instance streams out.
+
+```lua
+part = model:Watch("Part", {
+	Position = Vector3.zero
+})
+
+part:ClearState()
+print(part:GetState()) --> {}
+```
+
+`ClearState` will wipe all binding subscriptions and any qued state changes that were set to happen.
+
+`Streamable.UnWatch` will stop watching and deconstruct any streamable instance by the name passed to the function.
 
 Last but not least, two ordinary keys `Instance` and `IsStreamed` which holds reference to the streaming instance and a boolean if it is currently streamed in or not.
 
-## This library can be used for more than StreamingEnabled
+## This library can be used for more than just StreamingEnabled
 
 This can be used for any instance of any name or type that youd need to wait on, or just want to use declarative state for.
