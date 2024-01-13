@@ -1,6 +1,5 @@
 local Trove = require(script.Parent.Trove)
 local Symbol = require(script.Parent.Symbol)
-local Table = require(script.Parent.Table)
 
 local ERR_NO_SUBTABLES = "Cannot include subtables within State"
 local ERR_NOT_DICTIONARY = "State must be a dictionary"
@@ -102,15 +101,12 @@ function Config.prototype:SetKey(key: string, newValue)
 
 		if data then
 			local trove = data._trove
+			trove:Destroy()
 
 			if newValue == DeleteToken then
-				self[State][key] = nil
-				observers[key] = nil
-				self[InternalTrove]:Remove(trove)
-
+				state[key] = nil
 				return
 			end
-			trove:Destroy()
 
 			local handler = data._handler
 			handler(newValue, trove)
@@ -125,7 +121,7 @@ function Config.prototype:GetKey(key)
 end
 
 function Config.prototype:GetState()
-	return Table.shallow(self[State])
+	return table.clone(self[State])
 end
 
 function Config.prototype:Observe(key: string, observer)
@@ -142,10 +138,17 @@ function Config.prototype:Observe(key: string, observer)
 		_trove = trove,
 		_handler = observer,
 	}
+	trove:Add(function()
+		observers[key] = nil
+	end)
 
 	local currentState = self[State][key]
 	if currentState then
 		observer(currentState, trove)
+	end
+
+	return function()
+		self[InternalTrove]:Remove(trove)
 	end
 end
 
