@@ -3,6 +3,7 @@ local Trove = require(script.Parent.Trove)
 local None = require(script.None)
 local StatefulInstance = require(script.StatefulInstance)
 local Binding = require(script.Binding)
+local streamingCompound = require(script.streamingCompound)
 
 local Streamable = {}
 --[[
@@ -21,7 +22,7 @@ local Streamable = {}
 ]]
 Streamable.None = None
 --[[
-	Creates a special value that can be set, subscribed to and mapped
+	Creates a special value that can be set, subscribed to, and mapped
 
 	```lua
 	local binding = Streamable.createBinding(false)
@@ -49,6 +50,34 @@ Streamable.None = None
 	```
 ]]
 Streamable.createBinding = Binding.new
+
+--[[
+	Accepts multiple streams and combines them into one with an `Observe` method that only
+	evaluates when all streams are streamed in.
+
+	```lua
+	local stream = Streamable.new(model)
+	local compound = Streamable.compound({
+		Head = stream:Watch("Head"),
+		UpperTorso = stream:Watch("UpperTorso"),
+	})
+
+	compound:Observe(function(parts, trove)
+		local head, upperTorso = parts.Head, parts.UpperTorso
+		trove:Add(function()
+			print("something streamed out")
+		end)
+	end)
+
+	-- we are done with this compound
+	compound:Destroy()
+	```
+
+	Destroying the compound will **NOT** unwatch the original watched parts
+
+	If you need to access the state of these watched parts, either forward declare them or call `Watch` again to re access them.
+]]
+Streamable.compound = streamingCompound
 
 Streamable.__index = Streamable
 
@@ -113,7 +142,11 @@ end
 	local child = Streamable:Watch("Part", {
 		Position = Vector3.zero
 	})
-	```lua
+	```
+
+	This method caches, meaning any subsequent calls will return the same watched instance.
+
+	`initialState` will only be regarded on the first call
 ]]
 function Streamable:Watch(name: string, initialState: { any })
 	if self._watching[name] then
