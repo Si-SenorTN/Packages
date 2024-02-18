@@ -4,7 +4,7 @@ local Trove = require(script.Parent.Parent.Trove)
 return function(streams)
 	local trove = Trove.new()
 	local shownTrove = trove:Extend()
-	local streamedIn = trove:Construct(Signal)
+	local streamedIn = trove:Construct(Signal.Good)
 
 	local instances = {}
 	local isStreamed = false
