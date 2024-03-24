@@ -19,7 +19,7 @@ function StatefulInstance.new()
 
 	self.IsStreamed = false
 
-	self._streamed = Signal.Good.new()
+	self._streamed = Signal.new()
 	self._streamedTrove = Trove.new()
 
 	self._pendingState = {}

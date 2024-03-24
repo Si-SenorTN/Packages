@@ -7,7 +7,7 @@ function Binding.new(initialValue: any)
 	local self = setmetatable({}, Binding)
 
 	self._value = initialValue
-	self._changed = Signal.Good.new()
+	self._changed = Signal.new()
 
 	return self
 end
