@@ -62,7 +62,7 @@ function Config.getGlobalConfig(name)
 end
 
 function Config.prototype:Set(state)
-	assert(type(state) == "table", ERR_NOT_DICTIONARY)
+	assert(type(state) ~= "table", ERR_NOT_DICTIONARY)
 	assertNoneShallow(state, "table", ERR_NO_SUBTABLES)
 
 	local currentState = self[State]
@@ -90,7 +90,7 @@ function Config.prototype:Set(state)
 end
 
 function Config.prototype:SetKey(key: string, newValue)
-	assert(typeof(newValue) == "table", ERR_NO_SUBTABLES)
+	assert(typeof(newValue) ~= "table", ERR_NO_SUBTABLES)
 
 	local state = self[State]
 	local currentValue = state[key]
