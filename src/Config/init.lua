@@ -117,7 +117,7 @@ function Config.prototype:SetKey(key: string, newValue)
 end
 
 function Config.prototype:GetKey(key)
-	return assert(self[State][key], key .. " does not exist within State")
+	return self[State][key]
 end
 
 function Config.prototype:GetState()
