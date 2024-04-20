@@ -70,7 +70,7 @@ function Config.prototype:Set(state)
 
 	for name, data in pairs(observers) do
 		local currentValue, newValue = currentState[name], state[name]
-		if newValue and currentValue ~= newValue then
+		if newValue ~= nil and currentValue ~= newValue then
 			local trove = data._trove
 			trove:Destroy()
 
@@ -95,7 +95,7 @@ function Config.prototype:SetKey(key: string, newValue)
 	local state = self[State]
 	local currentValue = state[key]
 
-	if currentValue and currentValue ~= newValue then
+	if currentValue ~= nil and currentValue ~= newValue then
 		local observers = self[Observers]
 		local data = observers[key]
 
@@ -143,7 +143,7 @@ function Config.prototype:Observe(key: string, observer)
 	end)
 
 	local currentState = self[State][key]
-	if currentState then
+	if currentState ~= nil then
 		observer(currentState, trove)
 	end
 
