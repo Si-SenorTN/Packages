@@ -138,9 +138,6 @@ function Config.prototype:Observe(key: string, observer)
 		_trove = trove,
 		_handler = observer,
 	}
-	trove:Add(function()
-		observers[key] = nil
-	end)
 
 	local currentState = self[State][key]
 	if currentState ~= nil then
@@ -149,6 +146,7 @@ function Config.prototype:Observe(key: string, observer)
 
 	return function()
 		self[InternalTrove]:Remove(trove)
+		observers[key] = nil
 	end
 end
 
