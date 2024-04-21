@@ -68,21 +68,23 @@ function Config.prototype:Set(state)
 	local currentState = self[State]
 	local observers = self[Observers]
 
-	for name, data in pairs(observers) do
+	for name, all in observers do
 		local currentValue, newValue = currentState[name], state[name]
 		if newValue ~= nil and currentValue ~= newValue then
-			local trove = data._trove
-			trove:Destroy()
+			for _, data in all do
+				local trove = data._trove
+				trove:Destroy()
 
-			if newValue == DeleteToken then
-				self[State][name] = nil
-				observers[name] = nil
+				if newValue == DeleteToken then
+					self[State][name] = nil
+					observers[name] = nil
 
-				continue
+					continue
+				end
+
+				local handler = data._handler
+				handler(newValue, trove)
 			end
-
-			local handler = data._handler
-			handler(newValue, trove)
 		end
 	end
 
@@ -97,19 +99,20 @@ function Config.prototype:SetKey(key: string, newValue)
 
 	if currentValue ~= nil and currentValue ~= newValue then
 		local observers = self[Observers]
-		local data = observers[key]
 
-		if data then
-			local trove = data._trove
-			trove:Destroy()
+		if observers[key] then
+			for _, data in observers[key] do
+				data._trove:Destroy()
+			end
 
 			if newValue == DeleteToken then
 				state[key] = nil
 				return
 			end
 
-			local handler = data._handler
-			handler(newValue, trove)
+			for _, data in observers[key] do
+				data._handler(newValue, data._trove)
+			end
 		end
 	end
 
@@ -127,17 +130,16 @@ end
 function Config.prototype:Observe(key: string, observer)
 	local observers = self[Observers]
 	local existing = observers[key]
-
-	if existing then
-		local trove = existing._trove
-		trove:Destroy()
+	if not existing then
+		observers[key] = {}
 	end
 
 	local trove = self[InternalTrove]:Construct(Trove)
-	observers[key] = {
-		_trove = trove,
+	local id = #observers[key] + 1
+	table.insert(observers[key], id, {
 		_handler = observer,
-	}
+		_trove = trove,
+	})
 
 	local currentState = self[State][key]
 	if currentState ~= nil then
@@ -146,7 +148,7 @@ function Config.prototype:Observe(key: string, observer)
 
 	return function()
 		self[InternalTrove]:Remove(trove)
-		observers[key] = nil
+		observers[key][id] = nil
 	end
 end
 
